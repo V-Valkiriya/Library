@@ -7,6 +7,7 @@ $.prototype.carousel = function() {
         const slidesField = this[i].querySelector('.carousel-slides');
         const dots = this[i].querySelectorAll('.carousel-indicators li');
         let paused = false;
+        const active = this[i].querySelector('.carousel-inner');
 
         slidesField.style.width = 100 * slides.length + '%';
         slides.forEach(slide => {
@@ -83,15 +84,27 @@ $.prototype.carousel = function() {
                     }
                     dots.forEach(dot => dot.classList.remove('active'));
                     dots[slideIndex].classList.add('active');
-                }, 3000);
+                }, 2000);
             }
         
         activateAnimation();
 
-        slides[0].parentNode.addEventListener('mouseenter', () => {
+        active.addEventListener('mouseenter', () => {
             clearInterval(paused);
         });
-        slides[0].parentNode.addEventListener('mouseleave', () => {
+        document.querySelector('.carousel-prev').addEventListener('mouseenter', () => {
+            clearInterval(paused);
+        });
+        document.querySelector('.carousel-next').addEventListener('mouseenter', () => {
+            clearInterval(paused);
+        });
+        active.addEventListener('mouseleave', () => {
+            activateAnimation();
+        });
+        document.querySelector('.carousel-prev').addEventListener('mouseleave', () => {
+            activateAnimation();
+        });
+        document.querySelector('.carousel-next').addEventListener('mouseleave', () => {
             activateAnimation();
         });
     }
